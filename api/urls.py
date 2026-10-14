@@ -4,8 +4,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import (
     RiderViewSet, BookingViewSet,
     TransactionViewSet, WithdrawalViewSet,
-    new_booking_notification, rider_accept_booking
+    new_booking_notification, rider_accept_booking,
+    create_admin
 )
+
+
 
 
 router = DefaultRouter()
@@ -15,10 +18,15 @@ router.register(r'transactions', TransactionViewSet)
 router.register(r'withdrawals', WithdrawalViewSet)
 
 
+
+
 urlpatterns = [
     path('', include(router.urls)),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    
+    # ✅ Create admin user (visit ONCE then remove this line!)
+    path('create-admin/', create_admin, name='create-admin'),
     
     # ✅ Notifications + Auto-Assignment
     path('notifications/new-booking/', new_booking_notification, name='new_booking_notification'),
